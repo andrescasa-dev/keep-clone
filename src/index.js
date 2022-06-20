@@ -21,14 +21,12 @@ class App {
     this.$form.addEventListener('submit', (event) => {
       event.preventDefault();
       const title = this.$noteTitle.value.replace(/\s+/g, '');
-      const text = this.$noteText.value.replace(/\s+/g, '')
-      if(title || text ){
+      const text = this.$noteText.value.replace(/\s+/g, '');
+      if(title || text){
         this.addNote({title, text});
       } 
-      console.log(this.notes);
     })
   }
-
   handleClickClose(event){
     const closeClicked = event.target.closest('#form-close-button');
     if(closeClicked) this.closeForm();
@@ -36,7 +34,19 @@ class App {
 
   handleClickForm(event){
     const formClicked = event.target.closest('#form');
-    formClicked ? this.openForm() : this.closeForm();
+    const title = this.$noteTitle.value.replace(/\s+/g, '');
+    const text = this.$noteText.value.replace(/\s+/g, '');
+
+    if(formClicked){
+      this.openForm()
+    }
+    else{
+      if(title || text){
+        this.addNote({title, text});
+      } 
+      this.closeForm();
+    } 
+    
   }
 
   openForm(){
