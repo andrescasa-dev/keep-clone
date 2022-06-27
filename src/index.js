@@ -6,27 +6,28 @@ class App {
     this.$notes = document.querySelector('#notes');
     this.$placeHolder = document.querySelector('#placeholder');
     this.$modal = document.querySelector('#modal');
+    this.$modal_inputTitle = document.querySelector('#modal-title');
+    this.$modal_inputText = document.querySelector('#modal-text');
     this.$editingNote;
 
     this.addEventListeners();
 
     this.notes = [];
   }
+
   addEventListeners(){
     document.body.addEventListener('click', (event)=>{
+      const noteClicked = event.target.closest('#note');
       if(event.target.matches('#form-close-button')){
         this.closeForm();
       }
 
-      if(event.target.closest('#modal-close-button')){
-        this.editNote(this.$editingNote);
-        this.modalHandler();
+      if(noteClicked){
+        this.openModal(noteClicked);
       }
 
-      if(event.target.closest('#note')){
-        console.log("joasdfa")
-        this.$editingNote = event.target.closest('#note')
-        this.modalHandler();
+      if(event.target.matches('#modal-close-button')){
+        this.closeModal();
       }
     })
 
@@ -40,9 +41,29 @@ class App {
     })
   }
 
+  openModal(noteElement){
+    const noteId = noteElement.dataset.id;
+    const note = this.notes.find( note => note.id == noteId);
+    this.$modal.dataset.noteId = noteId;
+    this.$modal_inputTitle.value = note.title;
+    this.$modal_inputText.value = note.text;
+    this.modalHandler();
+  };
+
+  closeModal(){
+    debugger;
+    const {noteId} = this.$modal.dataset;
+    const note = this.notes.find( note => note.id == noteId);
+    note.title = this.$modal_inputTitle.value;
+    note.text = this.$modal_inputText.value;
+    this.modalHandler();
+    this.displayNoteModified(note);
+  }
+
   modalHandler(){
     this.$modal.classList.toggle('open-modal');
   }
+  /* ------------------------------- deleteThis ------------------------------- */
   /* ------------------------------------ tal vez en vez de pasar la nota uso solamente el id ----------------------------------- */
   editNote(note){
     const title = this.$modal.querySelector('#modal-title').value.replace(/\s+/g, '');
