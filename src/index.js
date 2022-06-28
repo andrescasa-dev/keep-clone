@@ -28,14 +28,19 @@ class App {
         this.closeForm();
       }
 
-      if(noteClicked){
+      if(event.target.matches('#delete-note')){
+        this.deleteNote(event)
+      }
+      else if(noteClicked){
         this.openModal(noteClicked);
       }
 
       if(event.target.matches('#modal-close-button')){
         this.closeModal();
       }
+
       this.changeColor(event);
+
     })
 
     document.body.addEventListener('mousedown', (event)=>{
@@ -50,6 +55,16 @@ class App {
     document.body.addEventListener('mouseover', (event)=>{
       this.openColorToolTip(event);
     })
+  }
+
+  deleteNote(event){
+    const $note = event.target.closest('#note');
+    const {noteId} = $note.dataset;
+    if(event.target.matches('#delete-note')){
+      const indexToDelete = this.notes.findIndex(note => note.id == noteId)
+      const [noteToDelete] = this.notes.splice(indexToDelete, 1);
+      this.removeNote(noteToDelete)
+    }
   }
 
   changeColor(event){
@@ -163,6 +178,12 @@ class App {
   displayLastNote(){
     const lastNote = this.notes[this.notes.length - 1];
     this.$notes.innerHTML += lastNote.getInnerHtml();
+  }
+
+  removeNote(noteToRemove){
+    debugger;
+    const $noteModify = document.querySelector(`[data-id="${noteToRemove.id}"]`)
+    $noteModify.outerHTML='';
   }
 }
 

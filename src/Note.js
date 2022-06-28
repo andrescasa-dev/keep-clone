@@ -12,7 +12,7 @@ export default class Note{
     <div class="toolbar-container">
       <div class="toolbar">
         <img id="toolbar-color" class="toolbar-color" src="https://cdn-icons-png.flaticon.com/512/565/565789.png">
-        <img class="toolbar-delete" src="https://cdn-icons-png.flaticon.com/512/3096/3096687.png">
+        <img id="delete-note" class="toolbar-delete" src="https://cdn-icons-png.flaticon.com/512/3096/3096687.png">
       </div>
     </div>
   </div>`
