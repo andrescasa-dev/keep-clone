@@ -13,3 +13,24 @@ when we use `object.prop++` we are incrementing the property,
 
 ## avoid modifying a property
 we need to use `object.prop + 1`.
+
+# working with local storage
+## save information
+ge save information as string using 
+
+```js
+windows.localstorage.setItem('key', JSON.stringify(object))
+```
+
+> if the object is an instance of a class, stringify covert the instance into a object literal, it means, we only have the own properties.
+
+## pull information
+
+```js
+const myVar = JSON.parse(windows.localstorage.getItem('key')) || []
+```
+if we have stored instances of classes we need to create them again
+
+```js
+const myVar = JSON.parse(windows.localstorage.getItem('key')).map(objeLiter => new MyObject(objeLiter)) || [];
+```

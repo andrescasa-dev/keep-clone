@@ -1,12 +1,11 @@
 export default class Note{
-  constructor(title, text, lastId){
-    Object.assign(this, {title, text, id: ++lastId})
-    this.color = 'white';
+  constructor(title, text, lastId, color = 'white'){
+    Object.assign(this, {title, text, id: ++lastId, color})
   }
 
   getInnerHtml(){
     return `
-    <div id="note" class ="note" data-id=${this.id} style="background-color: ${this.color}">
+    <div id="note" class ="note" data-note-id=${this.id} style="background-color: ${this.color}">
     <div class ="note-title">${this.title}</div>
     <div class ="note-text">${this.text}</div>
     <div class="toolbar-container">
